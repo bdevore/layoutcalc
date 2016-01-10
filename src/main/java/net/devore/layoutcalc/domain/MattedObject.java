@@ -1,16 +1,16 @@
-package net.devore.domain;
+package net.devore.layoutcalc.domain;
 
 /**
  * Class <code>MattedObject</code> is an abstract base class that describes an object that can be placed under a matte board
  * Created by benjamindevore on 1/3/16.
  */
 public abstract class MattedObject {
-    private String label;
-    private Dimension dimensions;
-    private float topOverlap;
-    private float rightOverlap;
-    private float bottomOverlap;
-    private float leftOverlap;
+    protected String label;
+    protected Dimension dimensions;
+    protected float topOverlap;
+    protected float rightOverlap;
+    protected float bottomOverlap;
+    protected float leftOverlap;
 
     /**
      * Default constructor

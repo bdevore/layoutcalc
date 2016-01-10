@@ -1,6 +1,7 @@
-package net.devore.domain;
+package net.devore.layoutcalc.domain;
 
-import net.devore.domain.layouts.MattedObjectLayout;
+import net.devore.layoutcalc.domain.layouts.MattedObjectLayout;
+import net.devore.layoutcalc.domain.MattedObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
 public class MatteBoard extends MattedObject {
     private List<MattedObject> contents = new ArrayList<MattedObject>();
     private MattedObjectLayout layout;
+    private float verticalOffset;
+    private float horizontalOffest;
+
 
     public MatteBoard(String label, MattedObjectLayout layout) {
         super(label);
@@ -44,11 +48,38 @@ public class MatteBoard extends MattedObject {
         this.layout = layout;
     }
 
+    /**
+     * Add a new object to the board
+     * @param mattedObject The object to add
+     */
     public void addMattedObject(MattedObject mattedObject) {
         contents.add(mattedObject);
     }
 
+    /**
+     * Remove an object from the board
+     * @param mattedObject The object to remove
+     * @return true if the object was found and removed
+     */
     public boolean removeMattedObject(MattedObject mattedObject) {
         return contents.remove(mattedObject);
+    }
+
+    /**
+     * Get the right inset distance for the layout from the right edge of the board
+     * @return The distance for the left right
+     */
+    public Insets getInsets() {
+        Dimension layoutDim = layout.getLayoutPreferredDimension();
+        float marginWidth = (dimensions.getWidth() - layoutDim.getWidth())/2;
+        float marginHeight = (dimensions.getHeight() - layoutDim.getHeight())/2;
+
+        Insets insets = new Insets();
+        insets.setTopInset(marginHeight + verticalOffset);
+        insets.setBottomInset(marginHeight - verticalOffset);
+        insets.setLeftInset(marginWidth + horizontalOffest);
+        insets.setRightInset(marginWidth - horizontalOffest);
+
+        return insets;
     }
 }

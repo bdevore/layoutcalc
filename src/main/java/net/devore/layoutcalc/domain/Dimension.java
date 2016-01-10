@@ -1,4 +1,4 @@
-package net.devore.domain;
+package net.devore.layoutcalc.domain;
 
 /**
  * Class <code>Dimension</code> describes the height and width dimensions of an object
