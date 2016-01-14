@@ -1,6 +1,7 @@
 package net.devore.layoutcalc.domain.layouts;
 
 import net.devore.layoutcalc.domain.Dimension;
+import net.devore.layoutcalc.domain.Insets;
 import net.devore.layoutcalc.domain.MattedObject;
 
 import java.util.List;
@@ -42,7 +43,6 @@ public class StackedObjectLayout implements MattedObjectLayout {
      *
      * @return A Dimension object contains the overall height and width needed to hold all contents
      */
-    @Override
     public Dimension getLayoutPreferredDimension() {
         float height = 0f;
         float width = 0f;
@@ -75,6 +75,32 @@ public class StackedObjectLayout implements MattedObjectLayout {
             }
         }
         return new Dimension(height, width);
+    }
+
+    /**
+     * Retrieve the Insets for the specified matted object. The Insets are relative to the layout containing the object.
+     *
+     * @param object The MattedObject to retrieve Insets for.
+     * @return The Insets for the specified MattedObject, null if the object does not exist within the layout instance
+     */
+    public Insets getInsetsForMattedObject(MattedObject object) {
+        Insets insets = null;
+        int index = mattedObjectList.indexOf(object);
+
+        // Found the object
+        if (index >= 0) {
+
+            Dimension layoutDimension = getLayoutPreferredDimension();
+
+            // Insets are calculated based on horizontal or vertical layout
+            // The inset for the 'non-stacked' dimension should be the difference between the
+            // preferred dimension and the object dimension
+            // Insets for the 'stacked' dimension are based on the size of objects above and below
+            // the current object
+            insets = new Insets();
+        }
+
+        return insets;
     }
 
     /* Getters and setters */
